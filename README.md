@@ -97,6 +97,8 @@ Edit `news.json` on the server. Each item needs these fields:
 ]
 ```
 
+The `linkurl` opens in the system browser when clicked. The `imageurl` field is accepted but not displayed (the game fetches the image but the rendering callback is a no-op in the current build). You can leave it empty.
+
 ## Timezone / daily reset
 
 The world resets at midnight in the configured timezone (set `RESET_TIMEZONE` in `deploy.conf`). The default is `America/Chicago` (US Central, DST-aware). All players on the same server always get the same world and leaderboard slot.
