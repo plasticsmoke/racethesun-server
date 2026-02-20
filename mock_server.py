@@ -34,6 +34,32 @@ RESET_TZ = ZoneInfo(os.environ.get("RESET_TIMEZONE", "America/Chicago"))
 LEADERBOARD_DAILY_COUNT = 7  # hardcoded in game client
 EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
 
+# Curated Steam Workshop portal worlds — one per day, rotating.
+# These are top-rated community levels from the Race the Sun Workshop.
+PORTAL_WORLDS = [
+    498624231,   # Kings Way
+    238795411,   # joyride
+    237874411,   # DLV Sky Machine
+    239841787,   # Galactic Space Battle!
+    239831012,   # mayan_prophecy
+    662666275,   # Maria's Sonnet
+    239472673,   # The Last Sunset
+    238139200,   # DLV Fast Future
+    652681175,   # Deep Ocean
+    633245073,   # Blue Moon
+    284426184,   # meteor shower v3
+    324930343,   # Forest Run
+    321737310,   # Sawmill
+    263730650,   # Dark Forest
+    241632483,   # Jotunheim
+    241141798,   # Mainframe
+    240709470,   # The Night Forest
+    240590071,   # The City
+    393616080,   # DreamScape
+    502525871,   # Springboard
+    272487616,   # Sand Trap
+]
+
 # Paths the game actually hits — everything else gets 404
 KNOWN_PATHS = {
     "/LatestNews/News.php",
@@ -111,12 +137,14 @@ def get_server_info():
     time_left_ms = int((next_midnight_ct - now_ct).total_seconds() * 1000)
 
     leaderboard_index = date_code % LEADERBOARD_DAILY_COUNT
+    portal_world = PORTAL_WORLDS[date_code % len(PORTAL_WORLDS)]
 
     return {
         "dateCode": date_code,
         "dateTimeLeft": time_left_ms,
         "leaderboardDailyCount": LEADERBOARD_DAILY_COUNT,
         "leaderboardIndex": leaderboard_index,
+        "portal_world_steam": portal_world,
     }
 
 
