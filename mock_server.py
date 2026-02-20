@@ -34,30 +34,38 @@ RESET_TZ = ZoneInfo(os.environ.get("RESET_TIMEZONE", "America/Chicago"))
 LEADERBOARD_DAILY_COUNT = 7  # hardcoded in game client
 EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
 
-# Curated Steam Workshop portal worlds — one per day, rotating.
-# These are top-rated community levels from the Race the Sun Workshop.
+# Daily portal world rotation — one per day, cycling every 28 days.
+# Workshop IDs serve that level from Steam. 0 = use built-in Flippfly world
+# (client picks from Void/Sky City/Undersea/Mysterious Forest/Sunrise via dateCode).
 PORTAL_WORLDS = [
     498624231,   # Kings Way
     238795411,   # joyride
     237874411,   # DLV Sky Machine
+    0,           # built-in (Flippfly)
     239841787,   # Galactic Space Battle!
     239831012,   # mayan_prophecy
     662666275,   # Maria's Sonnet
+    0,           # built-in (Flippfly)
     239472673,   # The Last Sunset
     238139200,   # DLV Fast Future
     652681175,   # Deep Ocean
-    633245073,   # Blue Moon
+    0,           # built-in (Flippfly)
     284426184,   # meteor shower v3
     324930343,   # Forest Run
     321737310,   # Sawmill
+    0,           # built-in (Flippfly)
     263730650,   # Dark Forest
     241632483,   # Jotunheim
     241141798,   # Mainframe
+    0,           # built-in (Flippfly)
     240709470,   # The Night Forest
     240590071,   # The City
     393616080,   # DreamScape
+    0,           # built-in (Flippfly)
     502525871,   # Springboard
     272487616,   # Sand Trap
+    0,           # built-in (Flippfly)
+    0,           # built-in (Flippfly)
 ]
 
 # Paths the game actually hits — everything else gets 404
