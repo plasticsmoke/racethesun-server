@@ -134,10 +134,12 @@ def get_server_info():
     now_utc = datetime.now(timezone.utc)
     now_ct = now_utc.astimezone(RESET_TZ)
 
-    # dateCode = number of days since epoch in Central Time, plus 1.
-    # The game subtracts 1 day when converting dateCode to a display date
-    # (see Assembly-CSharp: .AddDays(-1.0)), so we add 1 to compensate.
-    date_code = (now_ct.replace(hour=0, minute=0, second=0, microsecond=0) - EPOCH).days + 1
+    # dateCode = number of days since epoch in Central Time.
+    # Note: the game subtracts 1 day when displaying this as a date
+    # (see Assembly-CSharp: .AddDays(-1.0)), so the in-game date label
+    # will show 1 day behind. This is cosmetic -- do NOT add +1 here,
+    # as it shifts the leaderboard slot mapping and breaks score persistence.
+    date_code = (now_ct.replace(hour=0, minute=0, second=0, microsecond=0) - EPOCH).days
 
     # Time left until next midnight CT
     today_midnight_ct = now_ct.replace(hour=0, minute=0, second=0, microsecond=0)
