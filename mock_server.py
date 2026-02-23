@@ -14,6 +14,7 @@ import json
 import logging
 import os
 import sys
+import random
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -34,38 +35,20 @@ RESET_TZ = ZoneInfo(os.environ.get("RESET_TIMEZONE", "America/Chicago"))
 LEADERBOARD_DAILY_COUNT = 7  # hardcoded in game client
 EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
 
-# Daily portal world rotation — one per day, cycling every 28 days.
+# Portal world pool — seeded by dateCode so every player gets the same world
+# each day, but the sequence doesn't follow a predictable repeating pattern.
 # Workshop IDs serve that level from Steam. 0 = use built-in Flippfly world
 # (client picks from Void/Sky City/Undersea/Mysterious Forest/Sunrise via dateCode).
-PORTAL_WORLDS = [
-    498624231,   # Kings Way
-    238795411,   # joyride
+PORTAL_WORKSHOP = [
     237874411,   # DLV Sky Machine
-    0,           # built-in (Flippfly)
-    239841787,   # Galactic Space Battle!
-    239831012,   # mayan_prophecy
-    662666275,   # Maria's Sonnet
-    0,           # built-in (Flippfly)
-    239472673,   # The Last Sunset
     238139200,   # DLV Fast Future
-    0,           # built-in (Flippfly) — was Deep Ocean (endless, breaks scoring)
-    0,           # built-in (Flippfly)
-    284426184,   # meteor shower v3
-    324930343,   # Forest Run
-    321737310,   # Sawmill
-    0,           # built-in (Flippfly)
-    263730650,   # Dark Forest
-    241632483,   # Jotunheim
+    239831012,   # mayan_prophecy
     241141798,   # Mainframe
-    0,           # built-in (Flippfly)
-    240709470,   # The Night Forest
-    240590071,   # The City
+    263730650,   # Dark Forest
+    324930343,   # Forest Run
     393616080,   # DreamScape
-    0,           # built-in (Flippfly)
-    502525871,   # Springboard
-    272487616,   # Sand Trap
-    0,           # built-in (Flippfly)
-    0,           # built-in (Flippfly)
+    498624231,   # Kings Way
+    662666275,   # Maria's Sonnet
 ]
 
 # Paths the game actually hits — everything else gets 404
@@ -147,7 +130,13 @@ def get_server_info():
     time_left_ms = int((next_midnight_ct - now_ct).total_seconds() * 1000)
 
     leaderboard_index = date_code % LEADERBOARD_DAILY_COUNT
-    portal_world = PORTAL_WORLDS[date_code % len(PORTAL_WORLDS)]
+
+    # 50/50 Workshop vs built-in, seeded so all players match
+    rng = random.Random(date_code)
+    if rng.random() < 0.5:
+        portal_world = 0  # built-in Flippfly world
+    else:
+        portal_world = rng.choice(PORTAL_WORKSHOP)
 
     return {
         "dateCode": date_code,
