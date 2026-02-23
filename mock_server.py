@@ -48,7 +48,7 @@ PORTAL_WORLDS = [
     0,           # built-in (Flippfly)
     239472673,   # The Last Sunset
     238139200,   # DLV Fast Future
-    652681175,   # Deep Ocean
+    0,           # built-in (Flippfly) — was Deep Ocean (endless, breaks scoring)
     0,           # built-in (Flippfly)
     284426184,   # meteor shower v3
     324930343,   # Forest Run
