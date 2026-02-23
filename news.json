@@ -1,8 +1,15 @@
 [
   {
     "id": "1",
-    "headline": "Welcome back!",
-    "text": "Race the Sun community server is online.",
+    "headline": "Community Server Up",
+    "text": "Leaderboards and portal worlds are back!",
+    "linkurl": "https://github.com/plasticsmoke/racethesun-server",
+    "imageurl": ""
+  },
+  {
+    "id": "2",
+    "headline": "Some Notes",
+    "text": "Daily leaderboards show one day behind but are accurate",
     "linkurl": "https://github.com/plasticsmoke/racethesun-server",
     "imageurl": ""
   }
